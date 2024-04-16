@@ -281,7 +281,16 @@ except:
     pass
 
 
-with gr.Blocks() as app:
+with gr.Blocks(theme=gr.themes.Default(
+        primary_hue="blue",
+        secondary_hue="blue", 
+        neutral_hue="gray",
+        text_size="md",
+        spacing_size="md",
+        radius_size="md", 
+        font=["Source Sans Pro", "sans-serif"]
+    ), title="TTS Demo") as app:
+
     gr.Markdown(information)
     with gr.Row():
         max_text_length_tip = "" if max_text_length == -1 else f"( "+i18n("最大允许长度")+ f" : {max_text_length} ) "
@@ -308,7 +317,7 @@ with gr.Blocks() as app:
                             characters_and_emotions_,
                         ) = change_character_list(default_character_info_url)
                         characters_and_emotions = gr.State(characters_and_emotions_)
-                        scan_character_list = gr.Button(i18n("扫描人物列表"), variant="secondary")
+                        scan_character_list = gr.Button(i18n("扫描人物列表"), variant="primary")
 
         with gr.Column(scale=2):
             with gr.Tabs():
@@ -427,11 +436,12 @@ with gr.Blocks() as app:
                 stopStreamButton = gr.Button(i18n("停止播放"), variant="secondary")
             with gr.Row():
                 audioStreamRecieve = gr.Audio(None, label=i18n("音频输出"), interactive=False)
-    gr.HTML("<hr style='border-top: 1px solid #ccc; margin: 20px 0;' />")
+                
+    gr.HTML("<hr style='border-top: 1px solid #1e88e5; margin: 20px 0;' />")  # 使用蓝色的分割线
     gr.HTML(
-        f"""<p>{i18n("这是一个由")} <a href="{i18n("https://space.bilibili.com/66633770")}">XTer</a> {i18n("提供的推理特化包，当前版本：")}<a href="https://www.yuque.com/xter/zibxlp/awo29n8m6e6soru9">{frontend_version}</a>  {i18n("项目开源地址：")} <a href="https://github.com/X-T-E-R/TTS-for-GPT-soVITS">Github</a></p>
-            <p>{i18n("吞字漏字属于正常现象，太严重可尝试换行、加句号或调节batch size滑条。")}</p>
-            <p>{i18n("若有疑问或需要进一步了解，可参考文档：")}<a href="{i18n("https://www.yuque.com/xter/zibxlp")}">{i18n("点击查看详细文档")}</a>。</p>"""
+        f"""<p style='color:#1565c0;'>{i18n("这是一个由")} <a href="{i18n("https://space.bilibili.com/66633770")}">XTer</a> {i18n("提供的推理特化包，当前版本：")}<a href="https://www.yuque.com/xter/zibxlp/awo29n8m6e6soru9">{frontend_version}</a>  {i18n("项目开源地址：")} <a href="https://github.com/X-T-E-R/TTS-for-GPT-soVITS">Github</a></p>
+            <p style='color:#1565c0;'>{i18n("吞字漏字属于正常现象，太严重可尝试换行、加句号或调节batch size滑条。")}</p>
+            <p style='color:#1565c0;'>{i18n("若有疑问或需要进一步了解，可参考文档：")}<a href="{i18n("https://www.yuque.com/xter/zibxlp")}">{i18n("点击查看详细文档")}</a>。</p>"""
     )
     # 以下是事件绑定
     app.load(
@@ -528,4 +538,3 @@ with gr.Blocks() as app:
     )
 
 app.queue().launch(show_error=True, share=is_share, inbrowser=True)
-
